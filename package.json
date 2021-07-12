@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "cy-spok": "github:bahmutov/cy-spok",
     "cypress": "^7.7.0"
   }
 }
