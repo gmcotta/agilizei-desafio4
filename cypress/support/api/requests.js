@@ -31,8 +31,7 @@ class Requests {
     });
   }
 
-  putSingleBookingWithoutToken(response) {
-    const id = response.body.bookingid;
+  putSingleBookingWithoutToken(id) {
     return cy.request({
       method: 'PUT',
       url: `/booking/${id}`,
@@ -51,8 +50,7 @@ class Requests {
     });
   }
   
-  putSingleBookingWithToken(response, token) {
-    const id = response.body.bookingid;
+  putSingleBookingWithToken(id, token) {
     return cy.request({
       method: 'PUT',
       url: `/booking/${id}`,
@@ -74,8 +72,7 @@ class Requests {
     });
   }
 
-  deleteSingleBookingWithoutToken(response) {
-    const id = response.body.bookingid;
+  deleteSingleBookingWithoutToken(id) {
     return cy.request({
       method: 'DELETE',
       url: `/booking/${id}`,
@@ -83,8 +80,7 @@ class Requests {
     });
   }
   
-  deleteSingleBookingWithToken(response, token) {
-    const id = response.body.bookingid;
+  deleteSingleBookingWithToken(id, token) {
     return cy.request({
       method: 'DELETE',
       url: `/booking/${id}`,

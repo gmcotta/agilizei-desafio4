@@ -34,18 +34,22 @@ context('Booking', () => {
 
   context('PUT', () => {
     it('should not edit a single booking without token @functional', () => {
-      request.postSingleBooking().then(response => {
-        request.putSingleBookingWithoutToken(response).then(response => {
+      request.postSingleBooking().then(postResponse => {
+        const id = postResponse.body.bookingid;
+
+        request.putSingleBookingWithoutToken(id).then(response => {
           assertion.shouldHaveStatus(response, 403);
         });
       });
     });
     
     it(
-      'should not edit a single booking with invalid token @functional', 
+      'should not edit a single booking with invalid token @functional',
       () => {
-        request.postSingleBooking().then(response => {
-          request.putSingleBookingWithToken(response, 'invalid token')
+        request.postSingleBooking().then(postResponse => {
+          const id = postResponse.body.bookingid;
+
+          request.putSingleBookingWithToken(id, 'invalid-token')
             .then(response => {
               assertion.shouldHaveStatus(response, 403);
             }
@@ -54,11 +58,24 @@ context('Booking', () => {
       }
     );
 
-    it('should edit a single booking with valid token @functional', () => {
+    it('should not edit a single booking with invalid booking id', () => {
       request.postSingleBooking().then(response => {
-        request.putSingleBookingWithToken(response, Cypress.env('token'))
+        const id = 'invalid-id';
+
+        request.putSingleBookingWithToken(id, Cypress.env('token'))
           .then(response => {
-            assertion.shouldHaveStatus(response, 200);
+            assertion.shouldHaveStatus(response, 405);
+          });
+      });
+    });
+
+    it('should edit a single booking with valid token @functional', () => {
+      request.postSingleBooking().then(postResponse => {
+        const id = postResponse.body.bookingid;
+
+        request.putSingleBookingWithToken(id, Cypress.env('token'))
+          .then(putResponse => {
+            assertion.shouldHaveStatus(putResponse, 200);
           }
         );
       });
@@ -67,8 +84,10 @@ context('Booking', () => {
 
   context('DELETE', () => {
     it('should not delete a single booking without token @functional', () => {
-      request.postSingleBooking().then(response => {
-        request.deleteSingleBookingWithoutToken(response).then(response => {
+      request.postSingleBooking().then(postResponse => {
+        const id = postResponse.body.bookingid;
+
+        request.deleteSingleBookingWithoutToken(id).then(response => {
           assertion.shouldHaveStatus(response, 403);
         });
       });
@@ -77,8 +96,9 @@ context('Booking', () => {
     it(
       'should not delete a single booking with invalid token @functional', 
       () => {
-        request.postSingleBooking().then(response => {
-          request.deleteSingleBookingWithToken(response, 'invalid token')
+        request.postSingleBooking().then(postResponse => {
+          const id = postResponse.body.bookingid;
+          request.deleteSingleBookingWithToken(id, 'invalid-token')
             .then(response => {
               assertion.shouldHaveStatus(response, 403);
             }
@@ -86,10 +106,25 @@ context('Booking', () => {
         });
       }
     );
+    
+    it(
+      'should not delete a single booking with invalid id @functional', 
+      () => {
+        request.postSingleBooking().then(response => {
+          const id = 'invalid-id';
+          request.deleteSingleBookingWithToken(id, Cypress.env('token'))
+            .then(response => {
+              assertion.shouldHaveStatus(response, 405);
+            }
+          );
+        });
+      }
+    );
 
     it('should delete a single booking with valid token @functional', () => {
-      request.postSingleBooking().then(response => {
-        request.deleteSingleBookingWithToken(response, Cypress.env('token'))
+      request.postSingleBooking().then(postResponse => {
+        const id = postResponse.body.bookingid;
+        request.deleteSingleBookingWithToken(id, Cypress.env('token'))
           .then(response => {
             assertion.shouldHaveStatus(response, 201);
           }
