@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx cypress run",
+    "test:healthcheck": "npx cypress run --env grep=@healthcheck",
+    "test:contract": "npx cypress run --env grep=@contract",
+    "test:functional": "npx cypress run --env grep=@functional"
   },
   "keywords": [],
   "author": "",

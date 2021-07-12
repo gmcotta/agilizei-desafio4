@@ -4,9 +4,11 @@ import request from '../support/api/requests';
 import assertion from '../support/api/assertions';
 
 context('Ping', () => {
-  it('GET Healthcheck', () => {
-    request.getPing().then(response => {
-      assertion.shouldHaveStatus(response, 201);
+  context('GET', () => {
+    it('should validate application @healthcheck', () => {
+      request.getPing().then(response => {
+        assertion.shouldHaveStatus(response, 201);
+      });
     });
   });
 });

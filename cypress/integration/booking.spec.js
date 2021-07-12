@@ -10,7 +10,7 @@ before(() => {
 
 context('Booking', () => {
   context('GET', () => {
-    it('should show a single booking', () => {
+    it('should validate single booking contract @contract', () => {
       request.getSingleBooking().then(response => {
         assertion.validateContractOf(response, schema.getSingleBookingSchema());
       });
@@ -18,7 +18,7 @@ context('Booking', () => {
   });
 
   context('POST', () => {
-    it('should create a single booking', () => {
+    it('should create a single booking @functional', () => {
       request.postSingleBooking().then(response => {
         assertion.shouldHaveStatus(response, 200);
         assertion.booking.shouldBookingIdNotBeNull(response);
@@ -33,7 +33,7 @@ context('Booking', () => {
   });
 
   context('PUT', () => {
-    it('should not edit a single booking without token', () => {
+    it('should not edit a single booking without token @functional', () => {
       request.postSingleBooking().then(response => {
         request.putSingleBookingWithoutToken(response).then(response => {
           assertion.shouldHaveStatus(response, 403);
@@ -41,17 +41,20 @@ context('Booking', () => {
       });
     });
     
-    it('should not edit a single booking with invalid token', () => {
-      request.postSingleBooking().then(response => {
-        request.putSingleBookingWithToken(response, 'invalid token')
-          .then(response => {
-            assertion.shouldHaveStatus(response, 403);
-          }
-        );
-      });
-    });
+    it(
+      'should not edit a single booking with invalid token @functional', 
+      () => {
+        request.postSingleBooking().then(response => {
+          request.putSingleBookingWithToken(response, 'invalid token')
+            .then(response => {
+              assertion.shouldHaveStatus(response, 403);
+            }
+          );
+        });
+      }
+    );
 
-    it('should edit a single booking with valid token', () => {
+    it('should edit a single booking with valid token @functional', () => {
       request.postSingleBooking().then(response => {
         request.putSingleBookingWithToken(response, Cypress.env('token'))
           .then(response => {
@@ -63,7 +66,7 @@ context('Booking', () => {
   });
 
   context('DELETE', () => {
-    it('should not delete a single booking without token', () => {
+    it('should not delete a single booking without token @functional', () => {
       request.postSingleBooking().then(response => {
         request.deleteSingleBookingWithoutToken(response).then(response => {
           assertion.shouldHaveStatus(response, 403);
@@ -71,17 +74,20 @@ context('Booking', () => {
       });
     });
 
-    it('should not delete a single booking with invalid token', () => {
-      request.postSingleBooking().then(response => {
-        request.deleteSingleBookingWithToken(response, 'invalid token')
-          .then(response => {
-            assertion.shouldHaveStatus(response, 403);
-          }
-        );
-      });
-    });
+    it(
+      'should not delete a single booking with invalid token @functional', 
+      () => {
+        request.postSingleBooking().then(response => {
+          request.deleteSingleBookingWithToken(response, 'invalid token')
+            .then(response => {
+              assertion.shouldHaveStatus(response, 403);
+            }
+          );
+        });
+      }
+    );
 
-    it('should delete a single booking with valid token', () => {
+    it('should delete a single booking with valid token @functional', () => {
       request.postSingleBooking().then(response => {
         request.deleteSingleBookingWithToken(response, Cypress.env('token'))
           .then(response => {
