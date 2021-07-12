@@ -11,6 +11,7 @@
   "license": "ISC",
   "devDependencies": {
     "cy-spok": "github:bahmutov/cy-spok",
-    "cypress": "^7.7.0"
+    "cypress": "^7.7.0",
+    "cypress-select-tests": "^1.7.1"
   }
 }
