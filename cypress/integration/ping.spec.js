@@ -1,10 +1,12 @@
 /// <reference types="cypress" />
 
+import request from '../support/api/requests';
+import assertion from '../support/api/assertions';
+
 context('Ping', () => {
   it('GET Healthcheck', () => {
-    cy.request({
-      method: 'GET',
-      url: '/ping'
-    }).its('status').should('equal', 201);
+    request.getPing().then(response => {
+      assertion.shouldHaveStatus(response, 201);
+    });
   });
 });
