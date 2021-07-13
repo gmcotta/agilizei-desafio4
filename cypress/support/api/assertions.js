@@ -12,6 +12,14 @@ class Assertions {
       expect(response.body.bookingid, 'bookingid exists').to.not.be.null;
     },
 
+    shouldResponseBodyNotBeEmpty(response) {
+      expect(response.body.length, 'body is not empty').to.be.greaterThan(0);
+    },
+
+    shouldResponseBodyBeEmpty(response) {
+      expect(response.body.length, 'body is empty').to.equal(0);
+    },
+
     shouldHaveDefaultHeaders(response) {
       expect(response.headers, 'default headers exist').to.include({
         server: 'Cowboy',

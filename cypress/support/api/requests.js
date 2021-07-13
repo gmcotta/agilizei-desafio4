@@ -9,7 +9,22 @@ class Requests {
   getSingleBooking() {
     return cy.request({
       method: 'GET',
-      url: '/booking/1',
+      url: '/booking/2',
+    });
+  }
+
+  getAllBookings() {
+    return cy.request({
+      method: 'GET',
+      url: '/booking',
+    });
+  }
+
+  getAllBookingsWithQueryString(queryString) {
+    return cy.request({
+      method: 'GET',
+      url: '/booking',
+      qs: queryString,
     });
   }
 
@@ -66,7 +81,29 @@ class Requests {
         "additionalneeds": "Dinner"
       },
       headers: {
-        Cookie: `token=${token}`
+        cookie: `token=${token}`
+      },
+      failOnStatusCode: false,
+    });
+  }
+
+  putSingleBookingWithAuthorization(id, authorization) {
+    return cy.request({
+      method: 'PUT',
+      url: `/booking/${id}`,
+      body: {
+        "firstname": "Jim",
+        "lastname": "James",
+        "totalprice": 500,
+        "depositpaid": true,
+        "bookingdates": {
+          "checkin": "2021-01-01",
+          "checkout": "2021-01-02"
+        },
+        "additionalneeds": "Dinner"
+      },
+      headers: {
+        authorization: `Basic ${authorization}`
       },
       failOnStatusCode: false,
     });

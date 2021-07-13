@@ -12,8 +12,44 @@ class Schemas {
           checkin: spok.string,
           checkout: spok.string,
         },
+        additionalneeds: spok.string,
       }
-    )
+    );
+  }
+
+  postSingleBookingSchema() {
+    return spok(
+      {
+        bookingid: spok.number,
+        booking: {
+          firstname: spok.string,
+          lastname: spok.string,
+          totalprice: spok.number,
+          depositpaid: spok.type('boolean'),
+          bookingdates: {
+            checkin: spok.string,
+            checkout: spok.string,
+          },
+          additionalneeds: spok.string,
+        }
+      }
+    );
+  }
+  
+  putSingleBookingSchema() {
+    return spok(
+      {
+        firstname: spok.string,
+        lastname: spok.string,
+        totalprice: spok.number,
+        depositpaid: spok.type('boolean'),
+        bookingdates: {
+          checkin: spok.string,
+          checkout: spok.string,
+        },
+        additionalneeds: spok.string,
+      }
+    );
   }
 }
 
