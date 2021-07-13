@@ -128,19 +128,19 @@ class Requests {
     });
   }
 
-  postGenerateToken() {
+  postGenerateToken(username, password) {
     return cy.request({
       method: 'POST',
       url: '/auth',
       body: {
-        username: 'admin',
-        password: 'password123'
+        username,
+        password,
       }
-    })
+    });
   }
 
   doAuth() {
-    this.postGenerateToken().then(response => {
+    this.postGenerateToken('admin', 'password123').then(response => {
       const token = response.body.token;
       Cypress.env('token', token);
     });

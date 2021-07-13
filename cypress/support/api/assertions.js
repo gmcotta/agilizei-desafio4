@@ -38,6 +38,14 @@ class Assertions {
       expect(response.duration, 'duration is valid').lessThan(maxDuration);
     },
   }
+
+  auth = {
+    shouldHaveBodyWithBadCredentials(response) {
+      expect(response.body, 'body with bad credentials').to.include({
+        reason: 'Bad credentials',
+      });
+    },
+  }
 }
 
 export default new Assertions();

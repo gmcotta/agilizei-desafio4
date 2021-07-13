@@ -51,6 +51,14 @@ class Schemas {
       }
     );
   }
+
+  postGenerateTokenSchema() {
+    return spok(
+      {
+        token: spok.string,
+      }
+    )
+  }
 }
 
 export default new Schemas();
